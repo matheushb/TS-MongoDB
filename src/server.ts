@@ -1,8 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { router } from './router/userRouter';
-import { db } from './repository/dbConnect';
-import { error } from 'console';
+import router from './router/userRouter';
+import db from './config/dbConnect';
 
 const app = express();
 dotenv.config()
@@ -10,8 +9,9 @@ dotenv.config()
 app.use(express.json())
 app.use('/users', router)
 
-db.on('error', () => {console.log(`error: ${error}`)})
+db.on('error', err => {console.log(`error: ${err}`)})
 db.once('open', () => {console.log(`Database sucessfuly connected! :)`)})
+
 app.get('/', (req, res) => {res.send('Mainpage')})
 
 const port = process.env.PORT;

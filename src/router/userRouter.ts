@@ -1,15 +1,21 @@
-import { Router } from 'express';
+import express from 'express';
+import { UserController } from '../controller/userController';
+import { UserService } from '../service/userService';
 
-const router = Router();
+const router = express.Router();
+router.use(express.json())
 
-router.get('/',(req, res) => {}) //getUsers
+const userService = new UserService();
+const userController = new UserController(userService);
 
-router.get('/:id',(req, res) => {}) //getUserById
+router.get('/', async (req, res) => {res.json(await userController.getUsers())})
 
-router.post('/',(req, res) => {}) //addUser
+router.get('/:id', async (req, res) => {res.json(await userController.getUserById(req.params))}) 
 
-router.patch('/:id',(req, res) => {}) //editUserById
+router.post('/', async (req, res) => {res.json(await userController.addUser(req.body))}) 
 
-router.delete('/:id',(req, res) => {}) //deleteUserById
+router.patch('/:id', async (req, res) => {res.json(await userController.editUserById(req.params, req.body))}) 
 
-export { router } 
+router.delete('/:id', async (req, res) => {res.json(await userController.deleteUserById(req.params))}) 
+
+export default router; 
