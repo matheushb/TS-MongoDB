@@ -1,3 +1,0 @@
-como fazer o repository
-no editUserById em userService, a passagem de diversos parametros esta sendo feito da forma correta?
-a file interfaces esta definida de forma correta?
