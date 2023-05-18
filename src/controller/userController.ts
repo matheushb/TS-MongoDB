@@ -16,7 +16,6 @@ export class UserController {
     }
 
     addUser(data: object) {
-        
         return this.userService.addUser(data);
     }
 
@@ -27,6 +26,7 @@ export class UserController {
     }
 
     deleteUserById(tempId: IdObject) {
-        console.log(tempId);
+        const { id } = tempId;
+        return this.userService.deleteUserById(id);
     }
 }

@@ -1,3 +1,4 @@
+import { StrOrUnd } from "../interfaces";
 import users from "../models/User";
 
 export class UserService {
@@ -5,30 +6,40 @@ export class UserService {
     async getUsers() {
         try{
             return await users.find();
-        }catch(err){
-            console.log(err)
+        }catch(err: any){
+            return err.message;
         }
     }
 
     async getUserById(id: string) {
         try{
-            return await users.findById(id);
-        }catch(err){
-            return err;
+            return await users.find({_id: id});
+        }catch(err: any){
+            return err.message;
         }
     }
 
-    addUser(data: object) {
-
+    async addUser(data: object) {
+        try{
+            return await users.create(data);
+        }catch(err: any){
+            return err.message;
+        }
     }
     //mudar isso no editUser
-    editUserById(id: string, email: string | undefined, age: number | undefined, password: string | undefined, name: string | undefined) {
-
+    async editUserById(id: string, email: StrOrUnd, age: number | undefined, password: StrOrUnd, name: StrOrUnd) {
+        try{    
+            return await users.updateOne({_id: id}, {email, age, password, name})
+        }catch(err: any) {
+            return err.message;
+        }
     }
 
-    deleteUserById(id: string) {
-
+    async deleteUserById(id: string) {
+        try {
+            return await users.deleteOne({_id : id})
+        }catch(err: any){
+            return err.message;
+        }
     }
-
-
 }
